@@ -1,3 +1,4 @@
+import{Lekar} from "./lekar.js";
 export class Klinike{
 
   constructor(naziv,brojLekara,brojTermina)
@@ -16,9 +17,34 @@ export class Klinike{
       host.appendChild(this.kontejner);
 
       this.crtajFormu(this.kontejner);
-        
-    
-        
+     // this.crtajRasporedKlinike(this.kontejner);        
+  }
+
+  crtajRasporedKlinike(host)
+  {
+      const kontRasporeda = document.createElement("div");
+      kontRasporeda.className="kontRaspored";
+      host.appendChild(kontRasporeda);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
     crtajFormu(host){
 
@@ -58,27 +84,7 @@ export class Klinike{
         elLabela.innerHTML="Izaberite lekara";
         kontFroma.appendChild(elLabela);
 
-       /* let doktori = ["dr.Jovan Jovanovic","dr.Marko Markovic","dr.Pera Peric"];
-        let boja=["green","red"];
-        
-        let opcija=null;
-        let labela=null;
-        let divRb=null;
-        doktori.forEach((doktori,index)=>{
-            divRb = document.createElement("div");
-            opcija=document.createElement("input");
-            opcija.type="radio";
-            opcija.name=this.naziv;
-            opcija.value=boja[index];
-
-            labela = document.createElement("label");
-            labela.innerHTML=doktori;
-
-
-            divRb.appendChild(opcija);
-            divRb.appendChild(labela);
-            kontFroma.appendChild(divRb);
-        })*/
+       
         let opcija=null;
         let labela=null;
         let divRb=null;
@@ -162,12 +168,7 @@ export class Klinike{
         kontFroma.appendChild(dugmeOtkazi);
         dugmeOtkazi.onclick=(ev)=>{
             alert("OVDE IDE NESTO STO CU KASNIJE");
-        }
-
-        
-
-
-        
+        }      
 
     }
 }
