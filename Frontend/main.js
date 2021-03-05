@@ -1,4 +1,4 @@
-import { Klinike } from "./klinike";
+import { Klinike } from "./klinike.js";
 
-const Klinika1 = new Klinike("PrivBol1");
-Klinika1.crtajFormu(document.body);
+const Klinika1 = new Klinike("PrivBol1",8);
+Klinika1.crtajRaspored(document.body);

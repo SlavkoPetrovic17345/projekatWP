@@ -1,0 +1,12 @@
+.kontejner{
+    display: flex;
+    border: 1px solid black;
+}
+.kontForma{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 200px;
+}
+.kontRaspored{
+    display: flex;
+}
