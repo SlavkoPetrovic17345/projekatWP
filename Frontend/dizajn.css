@@ -4,8 +4,12 @@
 }
 .kontForma{
     display: flex;
+    min-width: 200px;
     flex-direction: column;
+    background-color: #85dcb0;
     flex-basis: 200px;
+    border: 1px solid black;
+    
 }
 .kontRaspored{
     display: flex;
