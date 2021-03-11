@@ -17,6 +17,11 @@ export class Klinike{
       if(!host){
         throw new ExtensionScriptApis("roditeljski element ne postoji");
       }
+      this.nazivKlinike=document.createElement("h1");
+      this.nazivKlinike.classList.add("naziv");
+      this.nazivKlinike.innerHTML=this.naziv;
+      host.appendChild(this.nazivKlinike);
+      
       this.kontejner=document.createElement("div");
       this.kontejner.classList.add("kontejner");
       host.appendChild(this.kontejner);
@@ -42,6 +47,7 @@ export class Klinike{
 
         let tb=document.createElement("input");
         tb.className="Ime";
+        tb.type="text";
         kontFroma.appendChild(tb);
 
         elLabela=document.createElement("label");
@@ -50,6 +56,7 @@ export class Klinike{
 
         tb=document.createElement("input");
         tb.className="Prezime";
+        tb.type="text";
         kontFroma.appendChild(tb);
 
         elLabela=document.createElement("label");
@@ -58,6 +65,7 @@ export class Klinike{
 
         tb=document.createElement("input");
         tb.className="JMBG";
+        tb.type="number";
         kontFroma.appendChild(tb);
 
         elLabela = document.createElement("h3");
@@ -151,14 +159,44 @@ export class Klinike{
         dugmePromeniLekara.innerHTML="Promeni Izabranog Lekara!";
         kontFroma.appendChild(dugmePromeniLekara);
         dugmePromeniLekara.onclick=(ev)=>{
-            alert("OVDE IDE NESTO STO CU KASNIJE");
+            const name = this.kontejner.querySelector(".Ime").value;
+            const lastName = this.kontejner.querySelector(".Prezime").value;
+            const matbr = this.kontejner.querySelector(".JMBG").value;
+
+            let doca =selDoktor.value;
+            let x=parseInt(selDan.value);
+            let y=parseInt(selVreme.value);
+            let imeDoktora = doktori[doca]; 
+            if(this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiIme() == name &&
+            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiPrezime() == lastName &&
+            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiJMBG() == matbr )
+            {
+                this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].promeniLekaraa(name,lastName,matbr,imeDoktora);
+            }
+
+            
+
+            
         }
 
         const dugmeOtkazi = document.createElement("button");
         dugmeOtkazi.innerHTML="Otkazi!";
         kontFroma.appendChild(dugmeOtkazi);
         dugmeOtkazi.onclick=(ev)=>{
-            alert("OVDE IDE NESTO STO CU KASNIJE");
+            const name = this.kontejner.querySelector(".Ime").value;
+            const lastName = this.kontejner.querySelector(".Prezime").value;
+            const matbr = this.kontejner.querySelector(".JMBG").value;
+
+            let doca =selDoktor.value;
+            let x=parseInt(selDan.value);
+            let y=parseInt(selVreme.value);
+            let imeDoktora = doktori[doca]; 
+            if(this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiIme() == name &&
+            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiPrezime() == lastName &&
+            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiJMBG() == matbr )
+            {
+                this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].otkaziTermin();
+            }
         }      
 
     }   

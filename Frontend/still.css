@@ -6,7 +6,7 @@
     display: flex;
     min-width: 200px;
     flex-direction: column;
-    background-color: #85dcb0;
+    background-color: #B2ECE1;
     flex-basis: 200px;
     border: 1px solid black;
     
@@ -18,12 +18,19 @@
 }
 .red{
     display: flex;
-    flex-grow: 1;    
+    flex-grow: 1;
+        
 }
 .kol{
     border: 1px solid black;
     flex:1 1 10px;
     margin:5px;
     text-align:center;
+
+}
+.naziv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
