@@ -1,0 +1,36 @@
+.kontejner{
+    display: flex;
+    border: 1px solid black;
+}
+.kontForma{
+    display: flex;
+    min-width: 200px;
+    flex-direction: column;
+    background-color: #B2ECE1;
+    flex-basis: 200px;
+    border: 1px solid black;
+    
+}
+.kontRaspored{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+.red{
+    display: flex;
+    flex-grow: 1;
+        
+}
+.kol{
+    border: 1px solid black;
+    flex:1 1 10px;
+    margin:5px;
+    text-align:center;
+
+}
+.naziv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
