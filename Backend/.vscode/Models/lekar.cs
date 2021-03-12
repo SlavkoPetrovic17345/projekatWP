@@ -1,6 +1,6 @@
 namespace Backend.Models
 {
-    public class Lekar
+    public class lekar
     {
 
     }

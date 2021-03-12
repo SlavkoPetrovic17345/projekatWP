@@ -4,13 +4,14 @@ namespace WebProgramiranje.Backend.Models
     
     public class KlinikaContext : DbContext
     {
-        public DbSet<Klinike> Klinike {get;set;}
-        public DbSet<Raspored> Klinike {get;set;}
-        public DbSet<Lekar> Klinike {get;set;}
+        public DbSet<klinike> Klinike {get;set;}
+        public DbSet<raspored> Klinike {get;set;}
+        public DbSet<lekar> Klinike {get;set;}
         
 
-        public KlinikaContext()
+        public KlinikaContext(DbContextOptions options): base(options)
         {
+            
 
         }
 
