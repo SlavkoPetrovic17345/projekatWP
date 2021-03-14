@@ -1,5 +1,5 @@
 export class Raspored{
-    constructor(i,j,tipBoja,jmbg,ime,prezime)
+    constructor(i,j,tipBoja,jmbg,ime,prezime,izabraniLekar)
     {
        
         this.x=i;
@@ -9,6 +9,7 @@ export class Raspored{
         this.jmbg=jmbg;
         this.ime = ime;
         this.prezime = prezime;
+        this.izabraniLekar=izabraniLekar;
         
         
     }
@@ -54,7 +55,7 @@ export class Raspored{
         host.appendChild(this.miniKontejner);
         
     }
-    azurirajRaspored(name,lastName,matbr,imeDoktora){
+    azurirajRaspored(name,lastName,matbr,imeDoktora,prezimeDoktora){
         
         if(this.miniKontejner.innerHTML != "Slobodan termin")
         {
@@ -70,7 +71,12 @@ export class Raspored{
         this.prezime = lastName;
         this.jmbg=matbr;
         this.miniKontejner.style.backgroundColor="#BA274A";
-        this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: " + imeDoktora;
+        if(prezimeDoktora != null)
+        {
+            this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr." + imeDoktora +" "+prezimeDoktora;
+            return;
+        }
+        this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr" + imeDoktora;
     }
     promeniLekaraa(name,lastName,matbr,imeDoktora){
         this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: " + imeDoktora;

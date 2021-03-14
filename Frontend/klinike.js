@@ -2,16 +2,23 @@ import{Lekar} from "./lekar.js";
 import { Raspored } from "./raspored.js";
 export class Klinike{
 
-  constructor(naziv,brojLekara,brojTermina)
+  constructor(naziv,brojLekara,brojTermina,lekari)
   {
       this.naziv=naziv;
       this.brojLekara=brojLekara;
       this.brojTermina=brojTermina;
       this.kontejner = null;
       this.rasporedi=[];
+      this.lekari=[];
   }
+
   dodajURaspored(rast){
       this.rasporedi.push(rast);
+  }
+  dodajLekareKlinike(drI,drP)
+  {
+    this.lekari.push(drI+" "+drP);
+
   }
   crtajRasporedKlinike(host){
       if(!host){
@@ -65,7 +72,7 @@ export class Klinike{
 
         tb=document.createElement("input");
         tb.className="JMBG";
-        tb.type="number";
+        tb.type="text";
         kontFroma.appendChild(tb);
 
         elLabela = document.createElement("h3");
@@ -75,8 +82,9 @@ export class Klinike{
        
         let opcija=null;
         let labela=null;
-        let divRb=null;
-        let doktori = ["dr.Jovan Jovanovic","dr.Marko Markovic","dr.Pera Peric"];
+        let divRb=null;        
+        let doktori = this.lekari;
+       
 
         divRb = document.createElement("div");
         let selDoktor = document.createElement("select");
@@ -91,9 +99,9 @@ export class Klinike{
             opcija.value= i;
             selDoktor.appendChild(opcija);
 
-        }
-
-        kontFroma.appendChild(divRb);           
+        }        
+        kontFroma.appendChild(divRb); 
+               
 
 
         elLabela = document.createElement("h3");
@@ -148,10 +156,36 @@ export class Klinike{
             let doca =selDoktor.value;
             let x=parseInt(selDan.value);
             let y=parseInt(selVreme.value);
-            let imeDoktora = doktori[doca];    
+            let imeDoktora = doktori[doca]; 
+
+            var imePrezime = imeDoktora.split(" ");
+                       
+            var pacijent =this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y];
+            if(pacijent.vratiIme() == null && pacijent.vratiPrezime() == null && pacijent.vratiJMBG() == null)
+            {
+                alert("radi");
+                fetch("https://localhost:5001/RasporedPacijenata/UpisiRaspored/"+this.naziv+"/"+imePrezime[0]+"/"+imePrezime[1], {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ime: name,
+                        prezime:lastName,
+                        jmbg:matbr,
+                        x:pacijent.x,
+                        y:pacijent.y
+                    }),
+                }).then(resp => {
+                    if(resp.ok) {
+                        location.reload();
+                    }
+                }) 
+            }
+
                   
 
-            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].azurirajRaspored(name,lastName,matbr,imeDoktora);
+            //this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].azurirajRaspored(name,lastName,matbr,imeDoktora);
             
         }
         
@@ -166,17 +200,44 @@ export class Klinike{
             let doca =selDoktor.value;
             let x=parseInt(selDan.value);
             let y=parseInt(selVreme.value);
-            let imeDoktora = doktori[doca]; 
-            if(this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiIme() == name &&
-            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiPrezime() == lastName &&
-            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiJMBG() == matbr )
+            var imeDoktora = doktori[doca]; 
+
+            var imePrezime = imeDoktora.split(" ");
+                       
+            var pacijent =this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y];
+            if(pacijent.vratiIme() == name && pacijent.vratiPrezime() == lastName && pacijent.vratiJMBG() == matbr)
             {
-                this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].promeniLekaraa(name,lastName,matbr,imeDoktora);
-            }
+                fetch("https://localhost:5001/RasporedPacijenata/IzmeniRaspored/"+matbr+"/"+imePrezime[0]+"/"+imePrezime[1], {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                        // body: JSON.stringify({
+                
+                        //     ime:pacijent.ime,
+                        //     prezime:pacijent.prezime,
+                        //     jmbg:pacijent.jmbg,
+                        //      x:(pacijent.x+1),
+                        //      y:(pacijent.y+1),
+                        //     lekar:{
+                        //         ime:imePrezime[0],
+                        //         prezime:imePrezime[1]
 
-            
-
-            
+                        //     }
+                        // })
+                     }).then(p => { 
+                        if (p.ok) {                  
+                            location.reload();
+                        }         
+                        else {
+                            alert("Greska Prilikom Izmene U Bazu!");
+                        }
+                    })  
+            }  
+            else
+            {
+                alert("Greska!Proveriti unete podatke!");
+            }    
         }
 
         const dugmeOtkazi = document.createElement("button");
@@ -191,14 +252,29 @@ export class Klinike{
             let x=parseInt(selDan.value);
             let y=parseInt(selVreme.value);
             let imeDoktora = doktori[doca]; 
-            if(this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiIme() == name &&
-            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiPrezime() == lastName &&
-            this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].vratiJMBG() == matbr )
+            var pacijent =this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y];
+            if(pacijent.vratiIme() == name && pacijent.vratiPrezime() == lastName && pacijent.vratiJMBG() == matbr )
             {
-                this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].otkaziTermin();
+                fetch("https://localhost:5001/RasporedPacijenata/IzbrisiRaspored/" + matbr,{
+                    method: "DELETE",
+                    headers:{
+                        "Content-Type": "application/json"
+                    }
+                }).then(p=>{
+                    if(p.ok)
+                    {
+                        location.reload();
+                    }
+                    else{
+                        alert("Greska Prilikom Brisanja");
+                    }
+                });
             }
-        }      
-
+            else
+            {
+                alert("Greska!Proveriti unete podatke!");
+            }
+        }
     }   
     crtajPonovoRaspored(host)
     {
@@ -222,27 +298,16 @@ export class Klinike{
       let red;     
       let ras;    
       
-      for(let i=0;i<6;i++)
-      {
+      for(let i=0;i<6;i++){
         red=document.createElement("div");
         red.className="red";
-        kontRasporeda.appendChild(red);   
-      
-
-          
+        kontRasporeda.appendChild(red);
 
         for(let j=0;j<this.brojTermina+1;j++){
-            
-            
             ras=new Raspored(i,j,"",true);
             this.dodajURaspored(ras);
             ras.crtajRasp(red);
         }
-        
-         
       }
-        
-      
-  }
-
+    }
 }
