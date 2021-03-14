@@ -5948,11 +5948,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\petro\\Desktop\\Backend\\Backend.csproj",
+      "projectUniqueName": "C:\\WebProgramiranje\\Backend\\Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "C:\\Users\\petro\\Desktop\\Backend\\Backend.csproj",
+      "projectPath": "C:\\WebProgramiranje\\Backend\\Backend.csproj",
       "packagesPath": "C:\\Users\\petro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\petro\\Desktop\\Backend\\obj\\",
+      "outputPath": "C:\\WebProgramiranje\\Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\petro\\AppData\\Roaming\\NuGet\\NuGet.Config"

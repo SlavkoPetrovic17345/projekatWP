@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OgR0ul+PGBTyZ23XwxsQ0Yoe7KG+wjfG6yVIYQj/H/rKIF2vGMGYDaVtj8/JOS68XEjUB/JVDQCSCoFdKF9QFw==",
+  "dgSpecHash": "F/70+PU5wAJa7Pw+ZQ50ImQbIgm2+69ffBmm2JM8qfRAq4+0e8FljdlvG+4rMYmK5q3TAU8SsCKqyVqrZpAkgw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\petro\\Desktop\\Backend\\Backend.csproj",
+  "projectFilePath": "C:\\WebProgramiranje\\Backend\\Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\petro\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\petro\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
