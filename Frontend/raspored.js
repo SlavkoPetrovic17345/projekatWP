@@ -13,7 +13,7 @@ export class Raspored{
    
     vratiBoju(){
         if(!this.slobodnoZauzeto)
-        return "#D6FFB7";
+        return "lime";
         else
         return this.slobodnoZauzeto;
     }
@@ -71,7 +71,7 @@ export class Raspored{
         this.prezime = lastName;
         this.jmbg=matbr;
         this.izabraniLekar= imeDoktora + " "+ prezimeDoktora;
-        this.miniKontejner.style.backgroundColor="#BA274A";
+        this.miniKontejner.style.backgroundColor="red";
         this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr." + imeDoktora +" "+prezimeDoktora;         
     }
     promeniLekaraa(imeDoktora,prezimeDoktora){
@@ -80,6 +80,6 @@ export class Raspored{
     }
     otkaziTermin(){
         this.miniKontejner.innerHTML="Slobodan termin";
-        this.miniKontejner.style.backgroundColor="#D6FFB7";
+        this.miniKontejner.style.backgroundColor="lime";
     }
 }

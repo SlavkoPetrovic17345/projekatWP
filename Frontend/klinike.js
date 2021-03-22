@@ -1,4 +1,3 @@
-import{Lekar} from "./lekar.js";
 import { Raspored } from "./raspored.js";
 export class Klinike{
 
@@ -33,8 +32,9 @@ export class Klinike{
       this.kontejner.classList.add("kontejner");
       host.appendChild(this.kontejner);
 
+      this.crtajFormu(this.kontejner);
       this.crtajRaspored(this.kontejner);   
-      this.crtajFormu(this.kontejner);      
+           
            
   }
     crtajFormu(host){
@@ -42,7 +42,7 @@ export class Klinike{
         const kontFroma = document.createElement("div");
         kontFroma.className = "kontForma";
         host.appendChild(kontFroma);
-        
+
         var elLabela = document.createElement("h3");
         elLabela.innerHTML="Unesite svoje podatke";
         kontFroma.appendChild(elLabela);
@@ -241,7 +241,7 @@ export class Klinike{
                 }).then(p=>{
                     if(p.ok)
                     {
-                        pacijent. otkaziTermin();
+                        pacijent.otkaziTermin();
                     }
                     else{
                         alert("Greska Prilikom Brisanja");
