@@ -17,9 +17,7 @@ namespace Backend.Controllers
        public RasporedPacijenataController(RasporedPacijenataContext context)
         {
             Context = context;
-        }  
-
-
+        }
         [Route("PreuzmiKlinike")]
         [HttpGet]
         public async Task<List<Klinike>> PreuzmiKlinike()
@@ -31,30 +29,7 @@ namespace Backend.Controllers
         public async Task<List<Lekar>> PreuzmiLekareKlinike(string naziv)
         {
             return await Context.Lekari.Include(k=>k.Klinike).Where(k=>k.Klinike.Naziv==naziv).ToListAsync();
-        }
-
-        [Route("UpisiKliniku")]
-        [HttpPost]
-        public async Task UpisiKliniku([FromBody] Klinike klinike)
-        {
-            Context.Klinikee.Add(klinike);
-            await Context.SaveChangesAsync();
-        }
-        [Route("IzmeniKliniku")]
-        [HttpPut]
-        public async Task IzmeniKliniku([FromBody] Klinike klinike)
-        {
-            Context.Update<Klinike>(klinike);
-            await Context.SaveChangesAsync();
-        }
-        [Route("IzbrisiKliniku/{id}")]
-        [HttpDelete]
-        public async Task IzbrisiKliniku(int id)
-        {
-            var klinika = await Context.Klinikee.FindAsync(id);
-            Context.Remove(klinika);
-            await Context.SaveChangesAsync();
-        }
+        }               
         [Route("UpisiRaspored/{imeKlinike}/{Ime}/{Prezime}")]
         [HttpPost]
         public async Task UpisiRaspored(string imeKlinike,[FromBody] Rasporedi rasporedi,string Ime,string Prezime)
@@ -93,8 +68,5 @@ namespace Backend.Controllers
             await Context.SaveChangesAsync();
             return true;              
         }
-   
-        
-        
     }
 }

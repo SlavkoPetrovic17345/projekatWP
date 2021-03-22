@@ -1,49 +1,49 @@
 export class Raspored{
-    constructor(i,j,tipBoja,jmbg,ime,prezime,izabraniLekar)
+    constructor(i,j,slobodnoZauzeto,jmbg,ime,prezime,izabraniLekar)
     {
-       
         this.x=i;
         this.y=j;
-        this.tipBoja=tipBoja;
+        this.slobodnoZauzeto=slobodnoZauzeto;
         this.miniKontejner=null;
         this.jmbg=jmbg;
         this.ime = ime;
         this.prezime = prezime;
         this.izabraniLekar=izabraniLekar;
-        
-        
     }
    
     vratiBoju(){
-        if(!this.tipBoja)
+        if(!this.slobodnoZauzeto)
         return "#D6FFB7";
         else
-        return this.tipBoja;
-    
+        return this.slobodnoZauzeto;
     }
     vratiIme(){
         if(this.miniKontejner.innerHTML != "Slobodan termin")
         {
-           
             return this.ime;
         }
-    
     }
     vratiPrezime(){
         if(this.miniKontejner.innerHTML != "Slobodan termin")
-        {
-           
+        {           
             return this.prezime;
         }
     
     }
     vratiJMBG(){
         if(this.miniKontejner.innerHTML != "Slobodan termin")
-        {
-           
+        {           
             return this.jmbg;
         }
     
+    }
+    crtajOkvir(host,text){
+        this.miniKontejner=document.createElement("div");        
+        this.miniKontejner.className="kol";
+        this.miniKontejner.innerHTML= text;
+        this.miniKontejner.style.backgroundColor="#F5FF90";
+        host.appendChild(this.miniKontejner);
+
     }
      
     crtajRasp(host){        
@@ -70,26 +70,16 @@ export class Raspored{
         this.ime= name;
         this.prezime = lastName;
         this.jmbg=matbr;
+        this.izabraniLekar= imeDoktora + " "+ prezimeDoktora;
         this.miniKontejner.style.backgroundColor="#BA274A";
-        if(prezimeDoktora != null)
-        {
-            this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr." + imeDoktora +" "+prezimeDoktora;
-            return;
-        }
-        this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr" + imeDoktora;
+        this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: dr." + imeDoktora +" "+prezimeDoktora;         
     }
-    promeniLekaraa(name,lastName,matbr,imeDoktora){
-        this.miniKontejner.innerHTML = name +" "+lastName + " ima zakazano kod: " + imeDoktora;
-    }
-    ponovoAzurirajRed(tekst)
-    {
-        this.miniKontejner.style.backgroundColor="#F5FF90";
-        this.miniKontejner.innerHTML = tekst;
-
+    promeniLekaraa(imeDoktora,prezimeDoktora){
+        this.izabraniLekar= imeDoktora + " "+ prezimeDoktora;
+        this.miniKontejner.innerHTML = this.ime +" "+this.prezime + " ima zakazano kod dr." + imeDoktora +" "+prezimeDoktora;
     }
     otkaziTermin(){
         this.miniKontejner.innerHTML="Slobodan termin";
-        this.miniKontejner.style.backgroundColor="#D6FFB7"
-
+        this.miniKontejner.style.backgroundColor="#D6FFB7";
     }
 }

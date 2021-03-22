@@ -1,15 +1,17 @@
 .kontejner{
     display: flex;
     border: 1px solid black;
+    background-color:#00ffcc;
+    
 }
+
 .kontForma{
     display: flex;
     min-width: 200px;
     flex-direction: column;
-    background-color: #B2ECE1;
+    background-color: #24e6d5;
     flex-basis: 200px;
     border: 1px solid black;
-    
 }
 .kontRaspored{
     display: flex;
