@@ -33,17 +33,16 @@ export class Klinike{
       this.kontejner.classList.add("kontejner");
       host.appendChild(this.kontejner);
 
-      
+      this.crtajRaspored(this.kontejner);   
       this.crtajFormu(this.kontejner);      
-      this.crtajRaspored(this.kontejner);
-      this.crtajPonovoRaspored(this.kontejner);        
+           
   }
     crtajFormu(host){
 
         const kontFroma = document.createElement("div");
         kontFroma.className = "kontForma";
         host.appendChild(kontFroma);
-
+        
         var elLabela = document.createElement("h3");
         elLabela.innerHTML="Unesite svoje podatke";
         kontFroma.appendChild(elLabela);
@@ -140,7 +139,6 @@ export class Klinike{
             opcija.innerHTML=dani[i];
             opcija.value= i;
             selDan.appendChild(opcija);
-
         }
 
         kontFroma.appendChild(divRb);           
@@ -163,7 +161,6 @@ export class Klinike{
             var pacijent =this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y];
             if(pacijent.vratiIme() == null && pacijent.vratiPrezime() == null && pacijent.vratiJMBG() == null)
             {
-                alert("radi");
                 fetch("https://localhost:5001/RasporedPacijenata/UpisiRaspored/"+this.naziv+"/"+imePrezime[0]+"/"+imePrezime[1], {
                     method: "POST",
                     headers: {
@@ -177,16 +174,11 @@ export class Klinike{
                         y:pacijent.y
                     }),
                 }).then(resp => {
-                    if(resp.ok) {
-                        location.reload();
+                    if(resp.ok) {                        
+                        pacijent.azurirajRaspored(name,lastName,matbr,imePrezime[0],imePrezime[1]);                       
                     }
                 }) 
-            }
-
-                  
-
-            //this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y].azurirajRaspored(name,lastName,matbr,imeDoktora);
-            
+            }  
         }
         
         const dugmePromeniLekara = document.createElement("button");
@@ -212,22 +204,9 @@ export class Klinike{
                     headers: {
                         "Content-Type": "application/json"
                     },
-                        // body: JSON.stringify({
-                
-                        //     ime:pacijent.ime,
-                        //     prezime:pacijent.prezime,
-                        //     jmbg:pacijent.jmbg,
-                        //      x:(pacijent.x+1),
-                        //      y:(pacijent.y+1),
-                        //     lekar:{
-                        //         ime:imePrezime[0],
-                        //         prezime:imePrezime[1]
-
-                        //     }
-                        // })
                      }).then(p => { 
                         if (p.ok) {                  
-                            location.reload();
+                            pacijent.promeniLekaraa(imePrezime[0],imePrezime[1]);
                         }         
                         else {
                             alert("Greska Prilikom Izmene U Bazu!");
@@ -251,7 +230,6 @@ export class Klinike{
             let doca =selDoktor.value;
             let x=parseInt(selDan.value);
             let y=parseInt(selVreme.value);
-            let imeDoktora = doktori[doca]; 
             var pacijent =this.rasporedi[this.brojTermina+2+(this.brojTermina+1)*x+y];
             if(pacijent.vratiIme() == name && pacijent.vratiPrezime() == lastName && pacijent.vratiJMBG() == matbr )
             {
@@ -263,7 +241,7 @@ export class Klinike{
                 }).then(p=>{
                     if(p.ok)
                     {
-                        location.reload();
+                        pacijent. otkaziTermin();
                     }
                     else{
                         alert("Greska Prilikom Brisanja");
@@ -276,22 +254,9 @@ export class Klinike{
             }
         }
     }   
-    crtajPonovoRaspored(host)
-    {
-       
-        let okviriRed=["Dani\\Termini","08:00h","09:00h","10:00h","11:00h","12:00h","13:00h","14:00h","15:00h"];
-        let dani=["Ponedeljak","Utorak","Sreda","Cetvrtak","Petak"];
-        for(let i=0;i<this.brojTermina+1;i++)
-        {
-            this.rasporedi[i].ponovoAzurirajRed(okviriRed[i]);
-        }
-        for(let i=0;i<5;i++)
-        {
-            this.rasporedi[(this.brojTermina+1)*(i+1)].ponovoAzurirajRed(dani[i]);
-        }
-
-    }
     crtajRaspored(host){      
+      let okviriRed=["Dani\\Termini","08:00h","09:00h","10:00h","11:00h","12:00h","13:00h","14:00h","15:00h"];
+      let dani=["Ponedeljak","Utorak","Sreda","Cetvrtak","Petak"];
       const kontRasporeda = document.createElement("div");
       kontRasporeda.className="kontRaspored";
       host.appendChild(kontRasporeda);
@@ -302,11 +267,30 @@ export class Klinike{
         red=document.createElement("div");
         red.className="red";
         kontRasporeda.appendChild(red);
+        
 
         for(let j=0;j<this.brojTermina+1;j++){
-            ras=new Raspored(i,j,"",true);
-            this.dodajURaspored(ras);
-            ras.crtajRasp(red);
+            if(i==0)
+            {
+                ras=new Raspored(i,j);
+                this.dodajURaspored(ras);
+                ras.crtajOkvir(red,okviriRed[j]);                
+
+            }    
+            else if(j==0)
+            {
+                ras=new Raspored(i,j);
+                this.dodajURaspored(ras);
+                ras.crtajOkvir(red,dani[i-1]);                
+
+            }        
+            else 
+            {
+                ras=new Raspored(i,j);
+                this.dodajURaspored(ras);
+                ras.crtajRasp(red);
+
+            }            
         }
       }
     }
