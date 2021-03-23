@@ -23,13 +23,7 @@ namespace Backend.Controllers
         public async Task<List<Klinike>> PreuzmiKlinike()
         {
             return await Context.Klinikee.Include(p=>p.Rasporedii).Include(k=>k.Lekari).ToListAsync();
-        }
-        [Route("PreuzmiLekareKlinike/{naziv}")]
-        [HttpGet]
-        public async Task<List<Lekar>> PreuzmiLekareKlinike(string naziv)
-        {
-            return await Context.Lekari.Include(k=>k.Klinike).Where(k=>k.Klinike.Naziv==naziv).ToListAsync();
-        }               
+        }            
         [Route("UpisiRaspored/{imeKlinike}/{Ime}/{Prezime}")]
         [HttpPost]
         public async Task UpisiRaspored(string imeKlinike,[FromBody] Rasporedi rasporedi,string Ime,string Prezime)
